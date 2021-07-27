@@ -1,0 +1,19 @@
+body {
+    font-family: Garamond !important;
+}
+
+table#mainTable {
+    width:50%;
+}
+
+.hidden {
+    display: none;
+}
+
+#titleDiv {
+    font-family: "Garamond";
+}
+
+form div{
+    display:block;
+}
