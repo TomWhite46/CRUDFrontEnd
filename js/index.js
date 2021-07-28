@@ -4,9 +4,6 @@
 
 const baseURL = "http://localhost:8080";
 const mainTableBody = document.querySelector("#mainTableBody");
-const iclInput = document.querySelector("#icl");
-const engInput = document.querySelector("#eng");
-const posInput = document.querySelector("#pos");
 const createForm = document.querySelector("#createForm");
 
 //*********************************SHOW ALL, calling render word for each item*************************
@@ -78,18 +75,17 @@ const createWord = (newWord) => {
 //apply above function to 'add word' button
 createForm.addEventListener('submit', function(e) {
     e.preventDefault();
-    document.querySelector("#img1").classList.remove("spin");
-    void document.querySelector("#img1").offsetWidth;
-    document.querySelector("#img1").classList.add("spin");
-    let newIcl = iclInput.value;
-    let newEng = engInput.value;
-    let newPos = posInput.value;
+    const thisForm = e.target;
+
+    let newIcl = thisForm.icl.value;
+    let newEng = thisForm.eng.value;
+    let newPos = thisForm.pos.value;
     let newWord = {icelandic:newIcl,english:newEng,pos:newPos};
     createWord(newWord);
-    iclInput.value ="";
-    engInput.value ="";
-    posInput.value ="";
-    iclInput.focus();
+    thisForm.icl.value ="";
+    thisForm.eng.value ="";
+    thisForm.pos.value ="";
+    thisForm.icl.focus();
 })
 
 //************************************DELETE BY ID *****************************************/
@@ -120,19 +116,10 @@ const divToInput= (thisDiv, colNo) => {
     //event listener for input
     newInput.addEventListener('focusout', (e) => inputToDiv(e.target));
     newInput.addEventListener('keydown', function (e) {
-        // //handle tab keypress
-        // if (e.key == 'Tab') {
-        //     e.preventDefault();
-        //     if(colNo !== 3) {
-        //         thisDiv.parentElement.parentElement.querySelectorAll("td > div")[colNo + 1].click();
-        //     } else { //if 'score' column, go to 'delete'
-        //         thisDiv.parentElement.parentElement.querySelector("td > button").focus();
-        //     }
-        // }
         //handle enter keypress
         if (e.key === 'Enter') {
             e.preventDefault();
-           iclInput.focus();
+            createForm.icl.focus();
         }
 
         
@@ -165,11 +152,10 @@ const inputToDiv = (thisInput) => {
         let thisPos = thisRow.querySelectorAll("td > div")[2].innerText;
         let thisScore = thisRow.querySelectorAll("td > div")[3].innerText;
         let thisWord = {icelandic:thisIcl,english:thisEng,pos:thisPos,score:thisScore}; //create replacement word
-        console.log(thisWord);
+
         // call replace using replacement word
         replace(thisId, thisWord);
 
-        console.log(thisPos);
     }
     thisInput.parentElement.querySelector("div").classList.remove("hidden");
     thisInput.remove();
@@ -199,23 +185,37 @@ testForm.addEventListener('submit', function(e) {
     const givenAnswer = testAns.value;
     const actualAnswer = ansText.innerText;
     const wordId = idText.innerText;
+    const ansAck = document.querySelector("#ansAck");
 
     if (givenAnswer === actualAnswer) {
-        alert("correct!");
+        ansAck.className="correct";
+        ansAck.innerText = "Correct!";
         // do patch for id item: get id, update score + 1 in backend.
         axios.patch(`${baseURL}/addScore/${wordId}`)
         .then(res => {
             console.log(res.data);
+            spinner();
             showAll();
             getRandom();
         }).catch(err => console.log(err));
-
     } else {
-        alert(`Wrong! The correct answer is "${actualAnswer}".`);
+        ansAck.className="incorrect";
+        ansAck.innerText = `Wrong! The correct answer is "${actualAnswer}".`;
         getRandom();
     }
-
+    testAns.value = "";
+    testAns.focus();
 })
+
+// make flags spin
+const spinner = () => {
+    document.querySelectorAll("img").forEach(image => {
+        image.classList.remove("spin");
+        void image.offsetWidth;
+        image.classList.add("spin");
+    });
+};
+
 // ****************** run immediately ************************
 showAll();
 getRandom();

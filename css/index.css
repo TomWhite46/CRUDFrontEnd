@@ -2,14 +2,18 @@ body {
     font-family: Garamond !important;
 }
 
-body > .container > .row {
+.bottomBorder {
     border-bottom: 3px dotted black;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+.col.right {
+    border-right: 3px dotted black;
 }
 
 table#mainTable {
-    width:75%;
+    width:100%;
     margin-left:auto;
     margin-right:auto;
 }
@@ -23,7 +27,6 @@ td {
 }
 
 #titleDiv {
-    font-family: "Garamond";
     text-align: center;
 }
 
@@ -48,6 +51,18 @@ form div{
 
 input {
     width:100%;
+}
+
+#ansAck {
+    margin-top:20px;
+}
+
+.correct {
+    color: green;
+}
+
+.incorrect {
+    color: red;
 }
 
 img.spin{
