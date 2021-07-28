@@ -78,6 +78,9 @@ const createWord = (newWord) => {
 //apply above function to 'add word' button
 createForm.addEventListener('submit', function(e) {
     e.preventDefault();
+    document.querySelector("#img1").classList.remove("spin");
+    void document.querySelector("#img1").offsetWidth;
+    document.querySelector("#img1").classList.add("spin");
     let newIcl = iclInput.value;
     let newEng = engInput.value;
     let newPos = posInput.value;
@@ -172,6 +175,36 @@ const inputToDiv = (thisInput) => {
     thisInput.remove();
 }
 
-// ****************** run immediately ************************
+//********************** populate test **************************************
+const testIcl = document.querySelector("#testIcl");
+const testAns = document.querySelector("#testAns");
+const ansButton = document.querySelector("#ansButton");
+const ansText = document.querySelector("#answer");
+const testForm = document.querySelector("#testForm");
 
+const getRandom = () => {
+    axios.get(`${baseURL}/getRandom`)
+    .then(res => {
+        console.log(res.data);
+        testIcl.innerText = res.data.icelandic;
+        answer.innerText = res.data.english;
+    }).catch(err => console.log(err))
+};
+
+
+//************************** evaluate test ******************************
+testForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const givenAnswer = testAns.value;
+    const actualAnswer = ansText.innerText;
+
+    if (givenAnswer === actualAnswer) {
+        alert("correct!");
+    } else {
+        alert("wrong!");
+    }
+
+})
+// ****************** run immediately ************************
 showAll();
+getRandom();

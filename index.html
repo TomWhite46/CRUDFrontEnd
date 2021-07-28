@@ -14,7 +14,7 @@
 </head>
 <body>
     <div id="titleDiv">
-        <h1><img src="./resources/flag.jpg" width = 50px;>Learn Icelandic Vocabulary!<img src="./resources/flag.jpg" width = 50px;></h1>
+        <img src="./resources/flag.svg" width=50px id="img1"><h1>Learn Icelandic Vocabulary!</h1><img src="./resources/flag.svg" width=50px>
     </div>
     <div class="container">
         <div class="row">
@@ -85,17 +85,33 @@
                     <div class="row">
                         <button id="createButton">Add word!</button>
                     </div>
+               
                 
                 
+
+
                 
                     
                 
-                    <script src="./js/index.js"></script>
+                    
 
 
                 </div>
             </form>
         </div>
+
+        <div class="row">
+            <h2>Test yourself!</h2>
+            <form id="testForm">
+                <p>What does <strong id="testIcl"></strong> mean?</p>
+                <label for="testAns">Answer:</label>
+                <input type="text" id="testAns">
+                <div id="answer" class="hidden"></div>
+                <button id="ansButton">Submit answer</button>
+            </form>
+        </div>
+
     </div>
+    <script src="./js/index.js"></script>
 </body>
 </html>
