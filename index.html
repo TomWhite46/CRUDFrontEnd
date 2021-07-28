@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/index.css">
     <title>Test Your Icelandic!</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+            integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
@@ -24,14 +27,16 @@
                 <table class="table table-dark" id="mainTable">
                     <thead>
                         <tr>
-                            <th scope="col" class="hidden">id</th>
+                            <th scope="col">id</th>
                             <th scope="col">Icelandic</th>
                             <th scope="col">English</th>
                             <th scope="col">Part of Speech</th>
                             <th scope="col">Score</th>
-                            <th scope="col">[delete]</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
+                    <tbody id="mainTableBody">
+                    </tbody>
                 </table>
         </div>
 
@@ -78,7 +83,9 @@
                 
                 
                     
-                    
+                
+                    <script src="./js/index.js"></script>
+
 
                 </div>
             </form>
