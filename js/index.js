@@ -56,9 +56,6 @@ const renderWord = (word, section) => {
 
 //*********************create new******************************
 const createWord = (newWord) => {
-    //create new word JSON
-    
-
     //post new word with create request
     axios.post(`${baseURL}/create`, newWord)
     .then(res => {
@@ -75,6 +72,10 @@ createForm.addEventListener('submit', function(e) {
     let newPos = posInput.value;
     let newWord = {icelandic:newIcl,english:newEng,pos:newPos};
     createWord(newWord);
+    iclInput.value ="";
+    engInput.value ="";
+    posInput.value ="";
+    iclInput.focus();
 })
 
 
