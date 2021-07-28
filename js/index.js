@@ -181,13 +181,14 @@ const testAns = document.querySelector("#testAns");
 const ansButton = document.querySelector("#ansButton");
 const ansText = document.querySelector("#answer");
 const testForm = document.querySelector("#testForm");
+const idText = document.querySelector("#idField");
 
 const getRandom = () => {
     axios.get(`${baseURL}/getRandom`)
     .then(res => {
-        console.log(res.data);
         testIcl.innerText = res.data.icelandic;
         answer.innerText = res.data.english;
+        idText.innerText = res.data.id;
     }).catch(err => console.log(err))
 };
 
@@ -197,11 +198,21 @@ testForm.addEventListener('submit', function(e) {
     e.preventDefault();
     const givenAnswer = testAns.value;
     const actualAnswer = ansText.innerText;
+    const wordId = idText.innerText;
 
     if (givenAnswer === actualAnswer) {
         alert("correct!");
+        // do patch for id item: get id, update score + 1 in backend.
+        axios.patch(`${baseURL}/addScore/${wordId}`)
+        .then(res => {
+            console.log(res.data);
+            showAll();
+            getRandom();
+        }).catch(err => console.log(err));
+
     } else {
-        alert("wrong!");
+        alert(`Wrong! The correct answer is "${actualAnswer}".`);
+        getRandom();
     }
 
 })
