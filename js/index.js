@@ -47,6 +47,12 @@ const renderWord = (word, section) => {
     const delCell = document.createElement('td');
     const delButton = document.createElement('button');
     delButton.innerText="Delete";
+    
+    delButton.addEventListener('click', function(e) {
+        deleteById(word.id);
+    });
+    
+    
     delCell.appendChild(delButton);
     newRow.appendChild(delCell);
 
@@ -78,8 +84,13 @@ createForm.addEventListener('submit', function(e) {
     iclInput.focus();
 })
 
-
-
+//*******************delete by id ********************/
+const deleteById = (id) => {
+    axios.delete(`${baseURL}/delete/${id}`)
+    .then(res => {
+        showAll();
+    }).catch(err => console.log(err));
+}
 
 
 
