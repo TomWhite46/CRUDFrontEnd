@@ -182,6 +182,11 @@ const getRandom = () => {
 //************************** evaluate test ******************************
 testForm.addEventListener('submit', function(e) {
     e.preventDefault();
+    testResults(e.target);
+})
+    
+// test results
+const testResults = (thisForm) => {
     const givenAnswer = testAns.value;
     const actualAnswer = ansText.innerText;
     const wordId = idText.innerText;
@@ -196,16 +201,19 @@ testForm.addEventListener('submit', function(e) {
             console.log(res.data);
             spinner();
             showAll();
-            getRandom();
+            getRandom(); //gets random within axios function, otherwise risks getting non-lowest due to asynchronous
         }).catch(err => console.log(err));
     } else {
         ansAck.className="incorrect";
         ansAck.innerText = `Wrong! The correct answer is "${actualAnswer}".`;
         getRandom();
+        
     }
+    //reset test answer box and focus
     testAns.value = "";
     testAns.focus();
-})
+}
+
 
 // make flags spin
 const spinner = () => {
