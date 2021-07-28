@@ -117,19 +117,23 @@ const divToInput= (thisDiv, colNo) => {
     //event listener for input
     newInput.addEventListener('focusout', (e) => inputToDiv(e.target));
     newInput.addEventListener('keydown', function (e) {
-        //handle tab keypress
-        if (e.key == 'Tab') {
-            e.preventDefault();
-            if(colNo !== 3) {
-                thisDiv.parentElement.parentElement.querySelectorAll("td > div")[colNo + 1].click();
-            } else { //if 'score' column, go to 'delete'
-                thisDiv.parentElement.parentElement.querySelector("td > button").focus();
-            }
-        }
+        // //handle tab keypress
+        // if (e.key == 'Tab') {
+        //     e.preventDefault();
+        //     if(colNo !== 3) {
+        //         thisDiv.parentElement.parentElement.querySelectorAll("td > div")[colNo + 1].click();
+        //     } else { //if 'score' column, go to 'delete'
+        //         thisDiv.parentElement.parentElement.querySelector("td > button").focus();
+        //     }
+        // }
         //handle enter keypress
         if (e.key === 'Enter') {
+            e.preventDefault();
            iclInput.focus();
         }
+
+        
+        
     });
 
     //make div invisible

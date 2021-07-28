@@ -25,6 +25,14 @@ td {
     text-align: center;
 }
 
+#titleDiv > h1 {
+    margin-bottom: 0px;
+}
+
+img {
+    margin-bottom:10px;
+}
+
 form div{
     display:block;
 }
