@@ -7,7 +7,7 @@ const engInput = document.querySelector("#eng");
 const posInput = document.querySelector("#pos");
 const createForm = document.querySelector("#createForm");
 
-//*********************show all, calling render word for each item*************************
+//*********************************SHOW ALL, calling render word for each item*************************
 const showAll = () => {
     mainTableBody.innerHTML="";
 
@@ -60,7 +60,7 @@ const renderWord = (word, section) => {
 
 }
 
-//*********************create new******************************
+//*************************************CREATE NEW **********************************************
 const createWord = (newWord) => {
     //post new word with create request
     axios.post(`${baseURL}/create`, newWord)
@@ -84,7 +84,7 @@ createForm.addEventListener('submit', function(e) {
     iclInput.focus();
 })
 
-//*******************delete by id ********************/
+//************************************DELETE BY ID *****************************************/
 const deleteById = (id) => {
     axios.delete(`${baseURL}/delete/${id}`)
     .then(res => {
@@ -93,6 +93,13 @@ const deleteById = (id) => {
 }
 
 
+//*************************************REPLACE BY ID ******************************************/
+const replace = (id, replacementWord) => {
+    axios.put(`${baseURL}/update/${id}`, replacementWord)
+    .then(res => {
+        showAll();
+    }).catch(err => console.log(err));
+}
 
 
 // ****************** run immediately ************************

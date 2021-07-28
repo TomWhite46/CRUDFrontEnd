@@ -12,6 +12,10 @@ table#mainTable {
     margin-right:auto;
 }
 
+td {
+    font-size:large;
+}
+
 .hidden {
     display: none;
 }
