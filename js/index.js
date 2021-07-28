@@ -38,6 +38,9 @@ const renderWord = (word, section) => {
 
     for (let i = 0; i < cellsVals.length; i++) {
         let subDiv = document.createElement('div');
+        //subdiv needs onclick function added here for update function
+        subDiv.addEventListener('click', (e) => divToInput(e.target));
+
         subDiv.innerText = cellsVals[i][1];
         cellsVals[i][0].appendChild(subDiv);
         newRow.appendChild(cellsVals[i][0]);
@@ -101,6 +104,17 @@ const replace = (id, replacementWord) => {
     }).catch(err => console.log(err));
 }
 
+const divToInput= (thisDiv) => {
+    //create input
+    const newInput = document.createElement('input');
+    newInput.type = "text";
+    
+    //make div invisible
+    thisDiv.classList.add("hidden");
+
+    //insert input into parent td
+    thisDiv.parentElement.appendChild(newInput);
+}
 
 // ****************** run immediately ************************
 
