@@ -5,7 +5,6 @@ const mainTableBody = document.querySelector("#mainTableBody");
 
 //show all, calling render word for each item
 const showAll = () => {
-    console.log("hi");
     mainTableBody.innerHTML="";
 
     axios.get(`${baseURL}/getAll`)
@@ -20,40 +19,31 @@ const showAll = () => {
 
 //render word in table
 const renderWord = (word, section) => {
+    //create row
     const newRow = document.createElement('tr');
+    newRow.id = word.id; //adds word id as row id
 
-    const idCell = document.createElement('td');
+    // create cells
     const iclCell = document.createElement('td');
     const engCell = document.createElement('td');
     const posCell = document.createElement('td');
     const scoreCell = document.createElement('td');
 
+    //2d array for cells and values
+    const cellsVals = [[iclCell, word.icelandic], [engCell, word.english], [posCell,word.pos], [scoreCell,word.score]];
 
-    const idDiv = document.createElement('div');
-    const iclDiv = document.createElement('div');
-    const engDiv = document.createElement('div');
-    const posDiv = document.createElement('div');
-    const scoreDiv = document.createElement('div');
-
-    idDiv.innerText=word.id;
-    iclDiv.innerText=word.icelandic;
-    engDiv.innerText=word.english;
-    posDiv.innerText=word.pos;
-    scoreDiv.innerText=word.score;
-
+    for (let i = 0; i < cellsVals.length; i++) {
+        let subDiv = document.createElement('div');
+        subDiv.innerText = cellsVals[i][1];
+        cellsVals[i][0].appendChild(subDiv);
+        newRow.appendChild(cellsVals[i][0]);
+    }
+    
+    //insert delete button
     const delCell = document.createElement('td');
     const delButton = document.createElement('button');
     delButton.innerText="Delete";
     delCell.appendChild(delButton);
-
-    const cells = [idCell, iclCell, engCell, posCell, scoreCell];
-    const divs = [idDiv, iclDiv, engDiv, posDiv, scoreDiv];
-
-    for (let i = 0; i < cells.length; i++) {
-        cells[i].appendChild(divs[i]);
-        newRow.appendChild(cells[i]);
-    }
-
     newRow.appendChild(delCell);
 
     section.appendChild(newRow);
