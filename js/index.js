@@ -2,8 +2,12 @@
 
 const baseURL = "http://localhost:8080";
 const mainTableBody = document.querySelector("#mainTableBody");
+const iclInput = document.querySelector("#icl");
+const engInput = document.querySelector("#eng");
+const posInput = document.querySelector("#pos");
+const createForm = document.querySelector("#createForm");
 
-//show all, calling render word for each item
+//*********************show all, calling render word for each item*************************
 const showAll = () => {
     mainTableBody.innerHTML="";
 
@@ -17,7 +21,7 @@ const showAll = () => {
         }).catch(err => console.log(err));
 }
 
-//render word in table
+//*********************render word as row in tbody******************************
 const renderWord = (word, section) => {
     //create row
     const newRow = document.createElement('tr');
@@ -49,6 +53,37 @@ const renderWord = (word, section) => {
     section.appendChild(newRow);
 
 }
+
+//*********************create new******************************
+const createWord = (newWord) => {
+    //create new word JSON
+    
+
+    //post new word with create request
+    axios.post(`${baseURL}/create`, newWord)
+    .then(res => {
+        showAll(); //call show all to refresh with new word added
+    }).catch(err => console.log(err));
+
+}
+
+//apply above function to 'add word' button
+createForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    let newIcl = iclInput.value;
+    let newEng = engInput.value;
+    let newPos = posInput.value;
+    let newWord = {icelandic:newIcl,english:newEng,pos:newPos};
+    createWord(newWord);
+})
+
+
+
+
+
+
+
+// ****************** run immediately ************************
 
 showAll();
 
