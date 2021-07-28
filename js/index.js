@@ -1,3 +1,5 @@
+'use strict';
+
 // getall
 
 const baseURL = "http://localhost:8080";
@@ -104,20 +106,52 @@ const replace = (id, replacementWord) => {
     }).catch(err => console.log(err));
 }
 
+//converts divs in getall table to text inputs
 const divToInput= (thisDiv) => {
     //create input
     const newInput = document.createElement('input');
     newInput.type = "text";
-    
+    newInput.class = "insert";
+    newInput.value = thisDiv.innerText;
+    //event listener for input
+    newInput.addEventListener('focusout', (e) => inputToDiv(e.target));
+
     //make div invisible
     thisDiv.classList.add("hidden");
 
     //insert input into parent td
     thisDiv.parentElement.appendChild(newInput);
+    newInput.focus();
+}
+
+
+//converts text inputs back to divs, and submits updated values as replacement word
+const inputToDiv = (thisInput) => {
+    const thisDiv = thisInput.parentElement.querySelector("div"); //get corresponding div
+    
+    //test if input has altered value: if not, skip put request
+    if (thisDiv.innerText !== thisInput.value) {
+        //sync hidden dv with input
+        thisDiv.innerText = thisInput.value;
+
+        //get values from tr (two parents up from input)
+        const thisRow = thisInput.parentElement.parentElement; 
+        let thisId = thisRow.id;
+        let thisIcl = thisRow.querySelectorAll("td > div")[0].innerText;
+        let thisEng = thisRow.querySelectorAll("td > div")[1].innerText;
+        let thisPos = thisRow.querySelectorAll("td > div")[2].innerText;
+        let thisScore = thisRow.querySelectorAll("td > div")[3].innerText;
+        let thisWord = {icelandic:thisIcl,english:thisEng,pos:thisPos,score:thisScore}; //create replacement word
+        console.log(thisWord);
+        // call replace using replacement word
+        replace(thisId, thisWord);
+
+        console.log(thisPos);
+    }
+    thisInput.parentElement.querySelector("div").classList.remove("hidden");
+    thisInput.remove();
 }
 
 // ****************** run immediately ************************
 
 showAll();
-
-// renderer
