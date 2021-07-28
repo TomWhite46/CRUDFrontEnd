@@ -29,6 +29,10 @@ form div{
     display:block;
 }
 
-insert {
-    width:"50px";
+.specialInput {
+    width:20px !important;
+}
+
+input {
+    width:100%;
 }
