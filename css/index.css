@@ -45,12 +45,18 @@ form div{
     display:block;
 }
 
-.specialInput {
-    width:20px !important;
-}
-
 input {
     width:100%;
+}
+
+input.right {
+    background-color:green;
+    color:white;
+}
+
+input.wrong {
+    background-color:red;
+    color:white;
 }
 
 #ansAck {
@@ -67,7 +73,7 @@ input {
 
 img.spin{
     animation-name: spin;
-    animation-duration: 1000ms;
+    animation-duration: 500ms;
     animation-iteration-count: 1;
     animation-timing-function:linear;
 }

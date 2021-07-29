@@ -37,9 +37,9 @@ const renderWord = (word, section) => {
 
     for (let i = 0; i < cellsVals.length; i++) {
         let subDiv = document.createElement('div');
-        //subdiv needs onclick function added here for update function
+		//subdiv needs onclick function added here for update function
         subDiv.addEventListener('click', (e) => divToInput(e.target, i));
-
+		
         subDiv.innerText = cellsVals[i][1];
         cellsVals[i][0].appendChild(subDiv);
         newRow.appendChild(cellsVals[i][0]);
@@ -111,7 +111,8 @@ const divToInput= (thisDiv, colNo) => {
     const newInput = document.createElement('input');
     newInput.type = "text";
     newInput.class = "specialInput";
-    newInput.style.width="70px";
+	
+    newInput.style.width=(thisDiv.parentElement.offsetWidth * 0.75) + "px";
     newInput.value = thisDiv.innerText;
     //event listener for input
     newInput.addEventListener('focusout', (e) => inputToDiv(e.target));
@@ -165,9 +166,11 @@ const inputToDiv = (thisInput) => {
 const testIcl = document.querySelector("#testIcl");
 const testAns = document.querySelector("#testAns");
 const ansButton = document.querySelector("#ansButton");
+const nextButton = document.querySelector("#nextButton");
 const ansText = document.querySelector("#answer");
 const testForm = document.querySelector("#testForm");
 const idText = document.querySelector("#idField");
+const ansAck = document.querySelector("#ansAck");
 
 const getRandom = () => {
     axios.get(`${baseURL}/getRandom`)
@@ -190,29 +193,47 @@ const testResults = (thisForm) => {
     const givenAnswer = testAns.value;
     const actualAnswer = ansText.innerText;
     const wordId = idText.innerText;
-    const ansAck = document.querySelector("#ansAck");
+    
 
     if (givenAnswer === actualAnswer) {
         ansAck.className="correct";
         ansAck.innerText = "Correct!";
+        testAns.classList.add("right");
         // do patch for id item: get id, update score + 1 in backend.
         axios.patch(`${baseURL}/addScore/${wordId}`)
         .then(res => {
             console.log(res.data);
             spinner();
             showAll();
-            getRandom(); //gets random within axios function, otherwise risks getting non-lowest due to asynchronous
+            
         }).catch(err => console.log(err));
     } else {
         ansAck.className="incorrect";
         ansAck.innerText = `Wrong! The correct answer is "${actualAnswer}".`;
+        testAns.classList.add("wrong");
         getRandom();
         
     }
-    //reset test answer box and focus
-    testAns.value = "";
-    testAns.focus();
+    // hide submit button, show next button
+    testAns.classList.add("disabled");
+    ansButton.classList.add("hidden");
+    nextButton.classList.remove("hidden");
+    nextButton.focus();
+    testAns.disabled= true;
 }
+
+nextButton.addEventListener('click', function(e) {
+    getRandom();
+    ///hide next button, show submit button, and load new test word
+    nextButton.classList.add("hidden");
+    ansButton.classList.remove("hidden");
+    testAns.classList.remove("right");
+    testAns.classList.remove("wrong");
+    ansAck.innerText ="";
+    testAns.value = "";
+    testAns.disabled= false;
+    testAns.focus();
+});
 
 
 // make flags spin
